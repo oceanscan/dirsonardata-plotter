@@ -1,0 +1,47 @@
+plugins {
+    id 'java'
+    id 'application'
+}
+
+group 'pt.omst'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+
+    maven {
+        url "https://www.omst.pt/software/maven"
+    }
+}
+
+ext {
+    junitVersion = '5.9.2'
+}
+
+sourceCompatibility = '17'
+targetCompatibility = '17'
+
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}
+
+application {
+    mainModule = 'pt.omst.dirsonardata'
+    mainClass = 'pt.omst.dirsonardata.DirSonarDataPlotter'
+}
+
+dependencies {
+
+    testImplementation("org.junit.jupiter:junit-jupiter-api:${junitVersion}")
+    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:${junitVersion}")
+
+    // This dependency is used by the application.
+    implementation 'com.google.guava:guava:31.1-jre'
+
+    implementation group: 'pt.lsts', name: 'imcjava', version: '5.4.32'
+
+}
+
+test {
+    useJUnitPlatform()
+}
